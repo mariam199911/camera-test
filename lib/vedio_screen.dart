@@ -17,7 +17,7 @@ class VideoRecording extends StatefulWidget {
 class _VideoRecordingState extends State<VideoRecording> {
   late File _storedVideo;
   final videoPicker = ImagePicker();
-  late VideoPlayerController videoPlayerController;
+  VideoPlayerController? videoPlayerController;
   Future<void> _takeVideo() async {
     final vedioFile = await videoPicker.pickVideo(
         source: ImageSource.camera, maxDuration: Duration(seconds: 10));
@@ -30,8 +30,8 @@ class _VideoRecordingState extends State<VideoRecording> {
     videoPlayerController = VideoPlayerController.file(_storedVideo)
       ..initialize().then((_) {
         setState(() {});
-        videoPlayerController.play(); //.pause() for pausing
-        videoPlayerController.setVolume(0.0);
+        videoPlayerController!.play(); //.pause() for pausing
+        videoPlayerController!.setVolume(0.0);
       });
   }
 
@@ -57,8 +57,8 @@ class _VideoRecordingState extends State<VideoRecording> {
             width: double.infinity,
             padding: const EdgeInsets.all(20),
             child: AspectRatio(
-                aspectRatio: videoPlayerController.value.aspectRatio,
-                child: VideoPlayer(videoPlayerController))),
+                aspectRatio: videoPlayerController!.value.aspectRatio,
+                child: VideoPlayer(videoPlayerController!))),
       ),
     );
   }
